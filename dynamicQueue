@@ -1,0 +1,99 @@
+import java.util.Scanner;
+
+class Node {
+    int info;
+    Node next;
+
+    Node(int info) {
+        this.info = info;
+        this.next = null;
+    }
+}
+
+public class DynamicQueue {
+    private Node front, rear;
+
+    public DynamicQueue() {
+        this.front = this.rear = null;
+    }
+
+    // Insert an element to the rear end of the queue
+    public void insert(int x) {
+        Node newNode = new Node(x);
+        if (rear == null) {
+            front = rear = newNode;
+            System.out.println(x + " inserted into queue");
+            return;
+        }
+        rear.next = newNode;
+        rear = newNode;
+        System.out.println(x + " inserted into queue");
+    }
+
+    // Delete an element from the front of the queue
+    public void delete() {
+        if (front == null) {
+            System.out.println("Queue is empty");
+            return;
+        }
+        System.out.println(front.info + " deleted from queue");
+        front = front.next;
+
+        if (front == null) {
+            rear = null;
+        }
+    }
+
+    // Display all elements of the queue
+    public void display() {
+        if (front == null) {
+            System.out.println("Queue is empty");
+            return;
+        }
+        Node temp = front;
+        System.out.print("Queue elements: ");
+        while (temp != null) {
+            System.out.print(temp.info + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        DynamicQueue queue = new DynamicQueue();
+        Scanner scanner = new Scanner(System.in);
+        int choice, value;
+
+        do {
+            System.out.println("\nQueue Operations Menu:");
+            System.out.println("1. Insert");
+            System.out.println("2. Delete");
+            System.out.println("3. Display");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter value to insert: ");
+                    value = scanner.nextInt();
+                    queue.insert(value);
+                    break;
+                case 2:
+                    queue.delete();
+                    break;
+                case 3:
+                    queue.display();
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please choose again.");
+                    break;
+            }
+        } while (choice != 4);
+
+        scanner.close();
+    }
+}
